@@ -1,4 +1,4 @@
-package com.example.wajavaw2.models;
+package com.example.wajavaw2.model;
 
 import java.util.Set;
 
@@ -11,8 +11,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 
 @Data
@@ -23,15 +27,24 @@ public class Student {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank
     @NotNull
     @Column(name = "name")
     private String name;
 
     @NotNull
+    @Max(40)
     @Column(name = "age")
     private Integer age;
 
+    @NotNull
+    @NotBlank
+    @Email
+    @Column(name = "email", unique = true)
+    private String email;
+
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "classRoom_id")
     private ClassRoom classRoom;
 

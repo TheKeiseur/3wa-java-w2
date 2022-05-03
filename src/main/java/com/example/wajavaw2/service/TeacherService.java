@@ -1,6 +1,6 @@
-package com.example.wajavaw2.services;
+package com.example.wajavaw2.service;
 
-import com.example.wajavaw2.models.Teacher;
+import com.example.wajavaw2.model.Teacher;
 import com.example.wajavaw2.repository.TeacherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

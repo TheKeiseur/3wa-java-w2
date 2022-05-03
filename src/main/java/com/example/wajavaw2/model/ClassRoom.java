@@ -1,4 +1,4 @@
-package com.example.wajavaw2.models;
+package com.example.wajavaw2.model;
 
 
 import javax.persistence.CascadeType;
@@ -13,6 +13,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 
 import java.util.List;
@@ -35,6 +36,7 @@ public class ClassRoom
     @JoinColumn(name = "teacher_id", referencedColumnName = "id")
     private Teacher teacher;
 
+    @JsonBackReference
     @OneToMany(mappedBy = "classRoom")
     private List<Student> students;
 

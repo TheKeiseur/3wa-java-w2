@@ -1,4 +1,4 @@
-package com.example.wajavaw2.models;
+package com.example.wajavaw2.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

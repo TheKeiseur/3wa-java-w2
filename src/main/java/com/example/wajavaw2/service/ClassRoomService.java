@@ -1,6 +1,6 @@
-package com.example.wajavaw2.services;
+package com.example.wajavaw2.service;
 
-import com.example.wajavaw2.models.ClassRoom;
+import com.example.wajavaw2.model.ClassRoom;
 import com.example.wajavaw2.repository.ClassRoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
