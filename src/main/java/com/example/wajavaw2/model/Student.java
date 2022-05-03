@@ -27,7 +27,7 @@ public class Student {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
+    @NotBlank(message = "Au moins une lettre")
     @NotNull
     @Column(name = "name")
     private String name;

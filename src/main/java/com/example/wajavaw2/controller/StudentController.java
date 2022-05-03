@@ -1,5 +1,6 @@
 package com.example.wajavaw2.controller;
 
+import com.example.wajavaw2.exception.StudentSaveFailureException;
 import com.example.wajavaw2.model.Student;
 import com.example.wajavaw2.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("api/v1/students")
@@ -30,5 +32,10 @@ public class StudentController {
     @ResponseBody
     ResponseEntity<Student> getStudentByEmail(@PathVariable String email) {
         return ResponseEntity.ok(this.studentService.getStudentByEmail(email));
+    }
+
+    @PutMapping("/{id}")
+    Optional<Student> updateStudentEmail(@PathVariable Long id, @RequestBody String email) {
+        return this.studentService.updateStudentEmail(id, email);
     }
 }
