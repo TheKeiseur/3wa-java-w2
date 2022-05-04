@@ -1,6 +1,5 @@
 package com.example.wajavaw2.controller;
 
-import com.example.wajavaw2.exception.StudentSaveFailureException;
 import com.example.wajavaw2.model.Student;
 import com.example.wajavaw2.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,8 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
-import java.util.Optional;
+import java.net.URISyntaxException;
 
 @RestController
 @RequestMapping("api/v1/students")
@@ -19,23 +17,23 @@ public class StudentController {
     StudentService studentService;
 
     @PostMapping
-    ResponseEntity<Student> createStudent(@Valid @RequestBody Student student) {
-        return ResponseEntity.ok(this.studentService.createStudent(student));
+    public ResponseEntity<Object> createStudent(@Valid @RequestBody Student student) throws URISyntaxException {
+        return ResponseEntity.ok(this.studentService.create(student));
     }
 
     @GetMapping
-    ResponseEntity<List<Student>> getAllStudents() {
-        return ResponseEntity.ok(this.studentService.getStudents());
+    public ResponseEntity<Object> getAllStudents() {
+        return ResponseEntity.ok(this.studentService.getAll());
     }
 
     @GetMapping("/{email}")
     @ResponseBody
-    ResponseEntity<Student> getStudentByEmail(@PathVariable String email) {
-        return ResponseEntity.ok(this.studentService.getStudentByEmail(email));
+    public ResponseEntity<Object> getStudentByEmail(@PathVariable String email) {
+        return ResponseEntity.ok(this.studentService.getOne(email));
     }
 
     @PutMapping("/{id}")
-    Optional<Student> updateStudentEmail(@PathVariable Long id, @RequestBody String email) {
-        return this.studentService.updateStudentEmail(id, email);
+    ResponseEntity<Object> updateStudentEmail(@PathVariable Long id, @RequestBody Student payload) {
+        return this.studentService.updateStudentEmail(id, payload);
     }
 }
