@@ -13,14 +13,14 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 
 import java.util.List;
 
 
 @Data
-@Entity(name = "classroom")
+@Entity(name = "classRoom")
 public class ClassRoom
 {
 
@@ -36,7 +36,7 @@ public class ClassRoom
     @JoinColumn(name = "teacher_id", referencedColumnName = "id")
     private Teacher teacher;
 
-    @JsonBackReference
+    @JsonManagedReference
     @OneToMany(mappedBy = "classRoom")
     private List<Student> students;
 

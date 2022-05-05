@@ -17,9 +17,10 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import lombok.Data;
+import lombok.*;
 
-@Data
+@Getter
+@Setter
 @Entity(name = "student")
 public class Student {
 
@@ -39,7 +40,7 @@ public class Student {
 
     @NotNull
     @NotBlank
-    @Email
+    @Email(message = "Email doit être unique")
     @Column(name = "email", unique = true)
     private String email;
 
@@ -55,4 +56,12 @@ public class Student {
             inverseJoinColumns = @JoinColumn(name = "subject_id"))
     private Set<Subject> subjects;
 
+    public Student(String name, Integer age, String email) {
+        this.name = name;
+        this.age = age;
+        this.email = email;
+    }
+
+    public Student() {
+    }
 }

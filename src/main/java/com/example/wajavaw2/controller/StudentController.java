@@ -10,29 +10,29 @@ import javax.validation.Valid;
 import java.net.URISyntaxException;
 
 @RestController
-@RequestMapping("api/v1/students")
+@RequestMapping("api/v1/management")
 public class StudentController {
 
     @Autowired
     StudentService studentService;
 
-    @PostMapping
+    @PostMapping("/students")
     public ResponseEntity<Object> createStudent(@Valid @RequestBody Student student) throws URISyntaxException {
         return ResponseEntity.ok(this.studentService.create(student));
     }
 
-    @GetMapping
+    @GetMapping("/students")
     public ResponseEntity<Object> getAllStudents() {
         return ResponseEntity.ok(this.studentService.getAll());
     }
 
-    @GetMapping("/{email}")
+    @GetMapping("/students/{email}")
     @ResponseBody
     public ResponseEntity<Object> getStudentByEmail(@PathVariable String email) {
         return ResponseEntity.ok(this.studentService.getOne(email));
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/students/{id}")
     ResponseEntity<Object> updateStudentEmail(@PathVariable Long id, @RequestBody Student payload) {
         return this.studentService.updateStudentEmail(id, payload);
     }
