@@ -1,17 +1,15 @@
 package com.example.wajavaw2.service;
 
-import com.example.wajavaw2.exception.StudentSaveFailureException;
+import com.example.wajavaw2.exception.StudentRegistrationFailedException;
 import com.example.wajavaw2.model.Student;
 import com.example.wajavaw2.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
+import java.util.OptionalDouble;
 
 @Service
 public class StudentService {
@@ -19,47 +17,42 @@ public class StudentService {
     @Autowired
     private StudentRepository studentRepository;
 
-    public ResponseEntity<Object> create(@RequestBody Student payload) throws URISyntaxException {
+    public Student create(Student payload) {
         try {
-            final Student savedStudent = studentRepository.save(payload);
-            final URI uri = new URI("/students/" + savedStudent.getId());
-
-            return ResponseEntity
-                    .created(uri)
-                    .body(savedStudent);
+            return studentRepository.save(payload);
         }
         catch (RuntimeException e) {
-            return ResponseEntity.unprocessableEntity().build();
+            throw new StudentRegistrationFailedException("It's not the error you are looking for");
         }
     }
 
-    public ResponseEntity<Object> getOne(String email) {
+    public Student getOne(String email) {
         try {
             final Optional<Student> optionalStudent = studentRepository.findByEmail(email);
 
             if (optionalStudent.isEmpty()) {
-                return ResponseEntity.notFound().build();
+                throw new RuntimeException();
             }
 
-            return ResponseEntity.ok().body(optionalStudent.get());
+            return optionalStudent.get();
         }
         catch (RuntimeException e) {
-            return ResponseEntity.unprocessableEntity().build();
+            throw new StudentRegistrationFailedException("That's not the error you are looking for");
         }
     }
 
-    public ResponseEntity<Object> getAll() {
+    public List<Student> getAll() {
         try {
             List<Student> students = studentRepository.findAll();
 
             if (students.size() == 0) {
-                return ResponseEntity.notFound().build();
+                throw new RuntimeException();
             }
 
-            return ResponseEntity.ok().body(students);
+            return students;
         }
         catch (RuntimeException e) {
-            return ResponseEntity.ok().body(List.of());
+            throw new StudentRegistrationFailedException("That's not the error you are looking for");
         }
     }
 
@@ -68,7 +61,7 @@ public class StudentService {
             final Optional<Student> optionalStudent = this.studentRepository.findById(id);
 
             if (optionalStudent.isEmpty()) {
-                throw new StudentSaveFailureException();
+                throw new StudentRegistrationFailedException("That's not the error you are looking for");
             }
 
             final Optional<Object> finalStudent = optionalStudent.map((Student student) -> {
@@ -79,7 +72,31 @@ public class StudentService {
             return ResponseEntity.ok(finalStudent);
         }
         catch (RuntimeException e) {
-            throw new StudentSaveFailureException();
+            throw new StudentRegistrationFailedException("That's not the error you are looking for");
+        }
+    }
+
+    public Optional<Student> getStudentById(Long id) {
+        try {
+            return studentRepository.findById(id);
+        } catch (RuntimeException ex) {
+            throw new StudentRegistrationFailedException("Message");
+        }
+    }
+
+    public List<Student> createMultipleStudents(List<Student> students) {
+        try {
+            return studentRepository.saveAll(students);
+        } catch (RuntimeException ex) {
+            throw new StudentRegistrationFailedException("Error during student registration");
+        }
+    }
+
+    public OptionalDouble getStudentAverageAge(List<Student> students) {
+        try {
+            return students.stream().mapToInt(Student::getAge).average();
+        } catch (RuntimeException ex) {
+            throw new RuntimeException(ex);
         }
     }
 }

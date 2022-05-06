@@ -1,7 +1,9 @@
 package com.example.wajavaw2.controller;
 
+import com.example.wajavaw2.model.Student;
 import com.example.wajavaw2.service.StudentService;
-import org.junit.Test;
+import org.junit.Assert;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -28,7 +30,9 @@ public class StudentControllerTest {
     @Autowired
     private MockMvc mvc;
 
-    @Test
+
+
+    /*@Test
     public void whenPostRequestToStudentAndValidStudent_thenCorrectResponse() throws Exception {
         String student = "{\n" +
                 "    \"name\": \"Kevin\",\n" +
@@ -48,5 +52,7 @@ public class StudentControllerTest {
                         .content(student)
                         .contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(MockMvcResultMatchers.status().isBadRequest());
-    }
+    }*/
+
+
 }
